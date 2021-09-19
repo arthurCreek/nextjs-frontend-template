@@ -1,7 +1,9 @@
+import Layout from '../../components/Layout';
+
 export default function AddSponsor() {
     return (
-        <div>
+        <Layout title="Add New Sponsor"> 
             <h1>Add Sponsor</h1>
-        </div>
+        </Layout>
     )
 }

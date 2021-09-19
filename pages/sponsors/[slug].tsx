@@ -1,7 +1,11 @@
+import Layout from '../../components/Layout';
+
+
 export default function SponsorPage() {
+
     return (
-        <div>
+        <Layout>
             <h1>Sponsor</h1>
-        </div>
+        </Layout>
     )
 }
