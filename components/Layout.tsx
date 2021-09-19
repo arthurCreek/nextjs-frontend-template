@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Header from './Header';
+import Footer from './Footer';
 import styles from '../styles/Layout.module.css';
 
 export interface Props {
@@ -18,9 +20,13 @@ export default function Layout(props: Props) {
                 <meta name='keywords' content={props.keywords} />
             </Head>
 
+        <Header/>
+
         <div className={styles.container}>
             {props.children}
         </div>
+
+        <Footer />
         </div>
     )
 }
