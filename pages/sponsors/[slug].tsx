@@ -29,9 +29,9 @@ export default function SponsorPage(props: Props) {
                 </div>
 
                 <h1>{props.spons.name}</h1>
-                {props.spons.image && (
+                {props.spons.image.formats.medium.url && (
                     <div className={styles.image}>
-                        <Image alt="Sponsor" src={props.spons.image} width={960} height={600} />
+                        <Image alt="Sponsor" src={props.spons.image.formats.medium.url} width={960} height={600} />
                     </div>
                 )}
 
@@ -55,7 +55,7 @@ export interface ServerProp {
 }
 
 export async function getServerSideProps(props: ServerProp) {
-    const res = await fetch(`${API_URL}/api/sponsors/${props.query.slug}`);
+    const res = await fetch(`${API_URL}/sponsors?slug=${props.query.slug}`);
     const sponsors = await res.json();
 
   return {

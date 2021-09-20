@@ -22,7 +22,7 @@ export default function SponsorsPage(props: Props) {
 
 
 export async function getServerSideProps() {
-  const res = await fetch(`${API_URL}/api/sponsors`);
+  const res = await fetch(`${API_URL}/sponsors?_sort=created_at:ASC`);
   const sponsors = await res.json();
 
   return {

@@ -13,7 +13,7 @@ export default function Header() {
         <nav>
             <ul>
                 <li>
-                    <Link href='sponsors'>
+                    <Link href='/sponsors'>
                         <a>Sponsors</a>
                     </Link>
                 </li>

@@ -29,10 +29,11 @@ export default function HomePage(props: Props) {
 
 
 export async function getServerSideProps() {
-  const res = await fetch(`${API_URL}/api/sponsors`);
+  const res = await fetch(`${API_URL}/sponsors?_limit=3&_sort=created_at:ASC`);
   const sponsors = await res.json();
+  console.log(`${API_URL}/sponsors?_sort=date:ASC&_limit=3`);
 
   return {
-    props: {sponsors: sponsors.slice(0,3)}
+    props: {sponsors}
   }
 }
