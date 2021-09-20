@@ -20,6 +20,11 @@ export default function Header() {
                         <a>Sponsors</a>
                     </Link>
                 </li>
+                <li>
+                    <Link href="/sponsors/add">
+                        <a>Add Sponsor</a>
+                    </Link>
+                </li>
             </ul>
         </nav>
             
