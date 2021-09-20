@@ -29,7 +29,7 @@ export default function SponsorPage(props: Props) {
                 </div>
 
                 <h1>{props.spons.name}</h1>
-                {props.spons.image.formats.medium.url && (
+                {props.spons.image && (
                     <div className={styles.image}>
                         <Image alt="Sponsor" src={props.spons.image.formats.medium.url} width={960} height={600} />
                     </div>

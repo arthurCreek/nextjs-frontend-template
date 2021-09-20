@@ -1,9 +1,11 @@
+import { ToastContainer, toast } from 'react-toastify';
 import {useState} from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
 import { API_URL } from '@/config/index';
 import styles from '@/styles/Form.module.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddSponsor() {
     const [values, setValues] = useState({
@@ -13,9 +15,31 @@ export default function AddSponsor() {
 
     const router = useRouter();
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
-        console.log(values);
+        
+        // Validation
+        const hasEmptyFields = Object.values(values).some((element) => element === '');
+        
+        if(hasEmptyFields) {
+            toast.error('Please fill in all fields');
+        }
+
+        const res = await fetch(`${API_URL}/sponsors`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        });
+
+        if(!res.ok) {
+            toast.error('Something went wrong');
+        } else {
+            const spons = await res.json();
+            router.push(`/sponsors/${spons.slug}`);
+            toast.success('Success!');
+        }
     };
 
     const handleInputChange = (e: any) => {
@@ -27,6 +51,7 @@ export default function AddSponsor() {
         <Layout title="Add New Sponsor"> 
         <Link href="/sponsors">Go Back</Link>
             <h1>Add Sponsor</h1>
+            <ToastContainer />
             <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.grid}>
                     <div>
