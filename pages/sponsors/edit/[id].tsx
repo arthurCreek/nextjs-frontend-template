@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '@/components/Layout';
+import Modal from '@/components/Modal';
 import { API_URL } from '@/config/index';
 import styles from '@/styles/Form.module.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,6 +23,8 @@ export default function EditSponsorPage(props: Props) {
     const [imagePreview, setImagePreview] = useState(
         props.spons.image ? props.spons.image.formats.thumbnail.url : null
     );
+
+    const [showModal, setShowModal] = useState(false);
 
     const router = useRouter();
 
@@ -84,10 +87,13 @@ export default function EditSponsorPage(props: Props) {
                     <p>No image uploaded</p>
                 </div>}
             <div>
-                <button className="btn btn-secondary">
+                <button onClick={() => setShowModal(true)} className="btn btn-secondary">
                     <FaImage /> Set Image
                 </button>
             </div>
+            <Modal show={showModal} onClose={() => setShowModal(false)}>
+                IMAGE UPLOAD
+            </Modal>
         </Layout>
     )
 }
