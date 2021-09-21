@@ -1,17 +1,34 @@
+import { ToastContainer, toast } from 'react-toastify';
 import { FaPencilAlt, FaTimes } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '@/components/Layout';
 import {API_URL} from '@/config/index';
 import styles from '@/styles/Event.module.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 
 export interface Props {
     spons: any
 }
 
 export default function SponsorPage(props: Props) {
-    const deleteEvent = (e: any) => {
-        console.log('Delete');
+    const router = useRouter();
+
+    const deleteEvent = async (e: any) => {
+        if(confirm('Are you sure?')) {
+            const res = await fetch(`${API_URL}/sponsors/${props.spons.id}`, {
+                method: 'DELETE'
+            });
+
+            const data = await res.json();
+
+            if(!res.ok) {
+                toast.error(data.message)
+            } else {
+                router.push('/sponsors');
+            }
+        }
     }
 
     return (
@@ -29,6 +46,7 @@ export default function SponsorPage(props: Props) {
                 </div>
 
                 <h1>{props.spons.name}</h1>
+                <ToastContainer />
                 {props.spons.image && (
                     <div className={styles.image}>
                         <Image alt="Sponsor" src={props.spons.image.formats.medium.url} width={960} height={600} />
