@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '@/components/Layout';
 import Modal from '@/components/Modal';
+import ImageUpload from '@/components/ImageUpload';
 import { API_URL } from '@/config/index';
 import styles from '@/styles/Form.module.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -60,6 +61,13 @@ export default function EditSponsorPage(props: Props) {
         setValues({...values, [name]: value});
     }
 
+    const imageUploaded = async () => {
+        const res = await fetch(`${API_URL}/sponsors/${props.spons.id}`);
+        const data = await res.json();
+        setImagePreview(data.image.formats.thumbnail.url);
+        setShowModal(false);
+    }
+
     return (
         <Layout title="Edit Sponsor"> 
         <Link href="/sponsors">Go Back</Link>
@@ -92,7 +100,7 @@ export default function EditSponsorPage(props: Props) {
                 </button>
             </div>
             <Modal show={showModal} onClose={() => setShowModal(false)}>
-                IMAGE UPLOAD
+                <ImageUpload sponsId={props.spons.id} imageUploaded={imageUploaded}/>
             </Modal>
         </Layout>
     )

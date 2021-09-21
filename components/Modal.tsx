@@ -36,7 +36,6 @@ export default function Modal(props: Props) {
   
     if (isBrowser) {
         const containerModal = document.getElementById('modal-root');
-        console.log(containerModal);
 
       return containerModal ? ReactDOM.createPortal(
         modalContent,
