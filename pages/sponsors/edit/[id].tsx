@@ -90,7 +90,7 @@ export default function EditSponsorPage(props: Props) {
             </form>
             <h2>Sponsor Image</h2>
             {imagePreview ? (
-                <Image src={imagePreview} height={100} width={170} />
+                <Image alt="Sponsor image" src={imagePreview} height={100} width={170} />
             ) : <div>
                     <p>No image uploaded</p>
                 </div>}

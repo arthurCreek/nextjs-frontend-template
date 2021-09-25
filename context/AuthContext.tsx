@@ -91,7 +91,7 @@ export const AuthProvider = (props: Props) => {
   // Logout user
   const logout = async () => {
     const res = await fetch(`${NEXT_URL}/api/logout`, {
-      method: 'POST',
+      method: 'POST'
     })
 
     if (res.ok) {
