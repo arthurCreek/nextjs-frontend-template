@@ -109,13 +109,16 @@ export default function EditSponsorPage(props: Props) {
 export interface EditProps {
     params: {
         id: any
-    }
+    },
+    req: any
 }
 
 
 export async function getServerSideProps(props: EditProps) {
     const res = await fetch(`${API_URL}/sponsors/${props.params.id}`);
     const spons = await res.json();
+
+    console.log(props.req.headers.cookie);
 
     return {
         props: {

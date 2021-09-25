@@ -50,7 +50,7 @@ export const AuthProvider = (props: Props) => {
       body: JSON.stringify(user),
     })
 
-    const data = await res.json()
+    const data = await res.json();
 
     if (res.ok) {
       setUser(data.user)
@@ -72,16 +72,15 @@ export const AuthProvider = (props: Props) => {
       },
       body: JSON.stringify({
         loginEmail,
-        loginPassword
+        loginPassword,
       }),
     })
 
     const data = await res.json()
-    
 
     if (res.ok) {
       setUser(data.user)
-      router.push('/account/dashboard')
+      // router.push('/account/dashboard')
     } else {
       setError(data.message)
       setError(null)
