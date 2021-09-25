@@ -80,7 +80,7 @@ export const AuthProvider = (props: Props) => {
 
     if (res.ok) {
       setUser(data.user)
-      // router.push('/account/dashboard')
+      router.push('/account/dashboard');
     } else {
       setError(data.message)
       setError(null)
