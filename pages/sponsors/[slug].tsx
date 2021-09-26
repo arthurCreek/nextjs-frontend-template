@@ -15,36 +15,9 @@ export interface Props {
 export default function SponsorPage(props: Props) {
     const router = useRouter();
 
-    const deleteEvent = async (e: any) => {
-        if(confirm('Are you sure?')) {
-            const res = await fetch(`${API_URL}/sponsors/${props.spons.id}`, {
-                method: 'DELETE'
-            });
-
-            const data = await res.json();
-
-            if(!res.ok) {
-                toast.error(data.message)
-            } else {
-                router.push('/sponsors');
-            }
-        }
-    }
-
     return (
         <Layout>
             <div className={styles.event}>
-                <div className={styles.controls}>
-                    <Link href={`/sponsors/edit/${props.spons.id}`}>
-                        <a>
-                            <FaPencilAlt /> Edit Sponsor
-                        </a>
-                    </Link>
-                    <a href="#" className={styles.delete} onClick={deleteEvent}>
-                        <FaTimes /> Delete Event
-                    </a>
-                </div>
-
                 <h1>{props.spons.name}</h1>
                 <ToastContainer />
                 {props.spons.image && (

@@ -4,7 +4,8 @@ import styles from '@/styles/Form.module.css'
 
 export interface Props {
     sponsId: any,
-    imageUploaded: any
+    imageUploaded: any,
+    token: any
 }
 
 export default function ImageUpload(props: Props) {
@@ -20,6 +21,9 @@ export default function ImageUpload(props: Props) {
 
         const res = await fetch(`${API_URL}/upload`, {
             method:'POST',
+            headers: {
+                Authorization: `Bearer ${props.token}`
+            },
             body: formData
         })
 

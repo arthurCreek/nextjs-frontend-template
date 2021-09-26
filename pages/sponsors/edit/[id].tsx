@@ -1,3 +1,4 @@
+import { parseCookies } from "../../../helpers/index";
 import { ToastContainer, toast } from 'react-toastify';
 import { FaImage } from 'react-icons/fa';
 import {useState} from 'react';
@@ -12,7 +13,8 @@ import styles from '@/styles/Form.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 export interface Props {
-    spons:any
+    spons:any,
+    token: any
 }
 
 export default function EditSponsorPage(props: Props) {
@@ -42,12 +44,17 @@ export default function EditSponsorPage(props: Props) {
         const res = await fetch(`${API_URL}/sponsors/${props.spons.id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${props.token}`
             },
             body: JSON.stringify(values)
         });
 
         if(!res.ok) {
+            if(res.status === 403 || res.status === 401) {
+                toast.error('Unathourized');
+                return
+            }
             toast.error('Something went wrong');
         } else {
             const spons = await res.json();
@@ -100,7 +107,7 @@ export default function EditSponsorPage(props: Props) {
                 </button>
             </div>
             <Modal show={showModal} onClose={() => setShowModal(false)}>
-                <ImageUpload sponsId={props.spons.id} imageUploaded={imageUploaded}/>
+                <ImageUpload sponsId={props.spons.id} imageUploaded={imageUploaded} token={props.token}/>
             </Modal>
         </Layout>
     )
@@ -115,14 +122,14 @@ export interface EditProps {
 
 
 export async function getServerSideProps(props: EditProps) {
+    const {token} = parseCookies(props.req);
     const res = await fetch(`${API_URL}/sponsors/${props.params.id}`);
     const spons = await res.json();
 
-    console.log(props.req.headers.cookie);
-
     return {
         props: {
-            spons
+            spons,
+            token
         }
     }
 }

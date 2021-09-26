@@ -1,3 +1,4 @@
+import { parseCookies } from "../../helpers/index";
 import { ToastContainer, toast } from 'react-toastify';
 import {useState} from 'react';
 import { useRouter } from 'next/router';
@@ -7,7 +8,11 @@ import { API_URL } from '@/config/index';
 import styles from '@/styles/Form.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function AddSponsor() {
+export interface Props {
+    token: any
+}
+
+export default function AddSponsor(props: Props) {
     const [values, setValues] = useState({
         name: '',
         description: ''
@@ -28,12 +33,17 @@ export default function AddSponsor() {
         const res = await fetch(`${API_URL}/sponsors`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${props.token}`
             },
             body: JSON.stringify(values)
         });
 
         if(!res.ok) {
+            if(res.status === 403 || res.status === 401) {
+                toast.error('No token included');
+                return
+            }
             toast.error('Something went wrong');
         } else {
             const spons = await res.json();
@@ -69,4 +79,20 @@ export default function AddSponsor() {
             </form>
         </Layout>
     )
+}
+
+export interface ServerProp {
+    req: any
+}
+
+export async function getServerSideProps(serverProps: ServerProp) {
+    const {token} = parseCookies(serverProps.req);
+
+    console.log(token);
+
+    return {
+        props: {
+            token
+        }
+    }
 }
